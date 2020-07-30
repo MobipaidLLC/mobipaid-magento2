@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <general>
+            <mobipaid_settings>
+                <title>Mobipaid Settings</title>
+                <version>1.0.0</version>
+                <payment_method_title></payment_method_title>
+                <payment_method_description></payment_method_description>
+                <access_key></access_key>
+                <mobipaid_log></mobipaid_log>
+            </mobipaid_settings>
+        </general>
+        <payment>
+            <mobipaid_flexible>
+                <active>1</active>
+                <model>Mobipaid\Mobipaid\Model\Method\Flexible</model>
+                <order_status>pending_payment</order_status>
+                <payment_action>authorize</payment_action>
+                <title>Mobipaid</title>
+            </mobipaid_flexible>
+        </payment>
+    </default>
+</config>
