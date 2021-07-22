@@ -5,7 +5,7 @@ Tags: credit card, mobipaid, google pay, apple pay, nedbank, payment method, pay
 Requires at least: 2.3.0
 Tested up to: 2.3.5
 Requires PHP: 7.2
-Stable tag: 1.0.0
+Stable tag: 1.0.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
