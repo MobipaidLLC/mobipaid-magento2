@@ -36,7 +36,6 @@ define(
                 var billingAddress = quote.billingAddress();
 
                 $('[data-key]').hide();
-                $('[data-key='+billingAddress.countryId+']').show();
                 
                 $("[data-role=opc-continue]").click(function() {
                     location.assign(window.location.href.split('#')[0]+'#payment');

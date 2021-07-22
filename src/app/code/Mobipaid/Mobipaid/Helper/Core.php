@@ -43,7 +43,7 @@ class Core extends \Magento\Framework\App\Helper\AbstractHelper
      *
      * @var string
      */
-    public $apiLiveUrl = 'https://stagetest.mobipaid.io/v2';
+    public $apiLiveUrl = 'https://live.mobipaid.io/v2';
 
     /**
      * API test url
