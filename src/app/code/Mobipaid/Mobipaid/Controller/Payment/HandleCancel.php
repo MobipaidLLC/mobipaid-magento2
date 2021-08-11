@@ -32,6 +32,6 @@ class HandleCancel extends \Mobipaid\Mobipaid\Controller\Payment\Index
         $this->logger->info('process cancel url');
 
         $this->_order->cancel()->save();
-        $this->redirectError('ERROR_GENERAL_CANCEL');
+        $this->redirectError('You already cancel the payment');
     }
 }
