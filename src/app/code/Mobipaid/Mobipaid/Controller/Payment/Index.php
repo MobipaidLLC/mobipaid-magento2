@@ -427,7 +427,7 @@ class Index extends \Magento\Framework\App\Action\Action
 
         $currentStatus = $order->getPayment()->getAdditionalInformation('mobipaid_status');
 
-        if ($responseStatus['result'] == 'ACK' && empty($currentStatus)) {
+        if ($responseStatus['result'] == 'ACK') {
             $responseStatus['status'] = 'payment_accepted';
         } else {
             $responseStatus['status'] = 'canceled';
