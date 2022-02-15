@@ -39,25 +39,26 @@ class Core extends \Magento\Framework\App\Helper\AbstractHelper
     public $isTestMode = false;
 
     /**
-     * API live url
+     * API url for production
      *
      * @var string
      */
     public $apiLiveUrl = 'https://live.mobipaid.io/v2';
 
     /**
-     * API test url
+     * API url for testing purposes
      *
      * @var string
      */
     public $apiTestUrl = 'https://test.mobipaid.io/v2';
 
     /**
-     * [__construct description]
-     * @param \Magento\Framework\App\Helper\Context       $context
-     * @param \Mobipaid\Mobipaid\Helper\Logger                $logger
-     * @param \Mobipaid\Mobipaid\Helper\Curl                  $curl
-     * @param \Magento\Framework\Locale\TranslatedLists   $translatedList
+     * Construct for core class
+     *
+     * @param object $context
+     * @param object $logger
+     * @param object $curl
+     * @param object $translatedList
      */
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
@@ -85,7 +86,8 @@ class Core extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
-     * get payment url postlink
+     * Get payment url postlink
+     *
      * @param  array $parameters
      * @return string
      */
@@ -103,7 +105,8 @@ class Core extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
-     * get CountryIso2 by iso3
+     * Get CountryIso2 by iso3
+     *
      * @param  string $iso3
      * @return string
      */
@@ -363,7 +366,8 @@ class Core extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
-     * get country name from country iso code
+     * Get country name from country iso code
+     *
      * @param  string $country
      * @return string
      */
@@ -379,7 +383,8 @@ class Core extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
-     * get comment order history
+     * Get comment order history
+     *
      * @param  array $response
      * @return string
      */
@@ -396,8 +401,10 @@ class Core extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
       /**
-       * do refund
-       * @param  array $parameters
+       * Do refund
+       *
+       * @param array $paymentId
+       * @param array $parameters
        * @return boolean | xml
        */
     public function doRefund($paymentId, $parameters)
@@ -414,7 +421,7 @@ class Core extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
-     * get the version of magento
+     * Get the version of magento
      *
      * @return string
      */

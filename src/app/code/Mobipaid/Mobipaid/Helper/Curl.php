@@ -21,15 +21,33 @@ namespace Mobipaid\Mobipaid\Helper;
 
 class Curl extends \Magento\Framework\App\Helper\AbstractHelper
 {
+    /**
+     * class of http
+     *
+     * @var string
+     */
     private $http;
+
+    /**
+     * class of logger
+     *
+     * @var string
+     */
     private $logger;
+    
+    /**
+     * class of curlFactory
+     *
+     * @var string
+     */
     private $curlFactory;
 
     /**
      * [__construct description]
-     * @param \Magento\Framework\App\Helper\Context       $context
-     * @param \Magento\Framework\HTTP\Adapter\CurlFactory $curlFactory
-     * @param \Mobipaid\Mobipaid\Helper\Logger                $logger
+     *
+     * @param object $context
+     * @param object $curlFactory
+     * @param object $logger
      */
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
@@ -42,7 +60,8 @@ class Curl extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
-     * get a response from the gateway
+     * Get a response from the gateway
+     *
      * @param  boolean $isJsonDecoded
      * @return string | boolean
      */
@@ -71,10 +90,12 @@ class Curl extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
-     * send request to the gateway
+     * Send request to the gateway
      *
      * @param string $url
      * @param string $request
+     * @param string $accessKey
+     * @param string $method
      * @param boolean $isJsonDecoded
      * @return string | boolean
      */

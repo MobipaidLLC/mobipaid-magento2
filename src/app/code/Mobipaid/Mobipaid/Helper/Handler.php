@@ -22,13 +22,13 @@ namespace Mobipaid\Mobipaid\Helper;
 class Handler extends \Magento\Framework\Logger\Handler\Base
 {
     /**
-     * Logging level
+     * The level of Logger
      * @var int
      */
     public $loggerType = Logger::INFO;
 
     /**
-     * File name
+     * Logger file name
      * @var string
      */
     public $fileName = '/var/log/mobipaid_log.log';
