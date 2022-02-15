@@ -19,7 +19,7 @@
  */
 ?>
 
-<script type="text/javascript">
+<script>
 require(
     [
         'jquery',
@@ -33,9 +33,12 @@ require(
         for(var i=0; i<list_payments.length;i++){
             var elmPayment = $("#mobipaid_mobipaid_payments_mobipaid_"+ list_payments[i] +"-head");
             var htmlPayment = elmPayment.html();
-            var logo = "<?= /* @noEscape */ $block->getViewFileUrl('Mobipaid_Mobipaid/images')?>/"+list_payments[i]+".png";
+            var logo = "<?= /* @noEscape */ $block->getViewFileUrl('Mobipaid_Mobipaid/images')?>/"
+            + list_payments[i]
+            + ".png";
 
-            elmPayment.prepend('<div style="width:200px; text-align:center; vertical-align:middle; display:inline-block;"><img src="'+logo+'" style="height:40px;"></div>');
+            elmPayment.prepend('<div style="width:200px; text-align:center; vertical-align:middle;'+
+                ' display:inline-block;"><img src="'+logo+'" style="height:40px;"></div>');
         }
     //]]>
 });

@@ -22,7 +22,7 @@ namespace Mobipaid\Mobipaid\Controller\Payment;
 class Form extends \Mobipaid\Mobipaid\Controller\Payment\Index
 {
     /**
-     * execute payment form
+     * Execute payment form
      */
     public function execute()
     {
