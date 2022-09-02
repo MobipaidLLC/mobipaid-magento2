@@ -3,9 +3,9 @@
 Contributors: mobipaid
 Tags: credit card, mobipaid, google pay, apple pay, nedbank, payment method, payment gateway
 Requires at least: 2.3.0
-Tested up to: 2.4.3
+Tested up to: 2.4.5
 Requires PHP: 7.2
-Stable tag: 1.0.5
+Stable tag: 1.0.7
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -57,7 +57,7 @@ Mobipaid is the best payment solution available for merchants who need payment f
 
 == Installation ==
 
-Note: Magento 2.3.0 - 2.4.3 must be installed for this plugin to work.
+Note: Magento 2.3.0 - 2.4.5 must be installed for this plugin to work.
 
 == Install the module using a file upload and SSH commands ==
 

@@ -10,7 +10,7 @@
         <general>
             <mobipaid_settings>
                 <title>Mobipaid Settings</title>
-                <version>1.0.5</version>
+                <version>1.0.7</version>
                 <payment_method_title></payment_method_title>
                 <payment_method_description></payment_method_description>
                 <access_key></access_key>
