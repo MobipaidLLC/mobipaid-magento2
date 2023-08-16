@@ -34,7 +34,7 @@ class Curl extends \Magento\Framework\App\Helper\AbstractHelper
      * @var string
      */
     private $logger;
-    
+
     /**
      * class of curlFactory
      *
@@ -52,11 +52,23 @@ class Curl extends \Magento\Framework\App\Helper\AbstractHelper
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
         \Magento\Framework\HTTP\Adapter\CurlFactory $curlFactory,
-        \Mobipaid\Mobipaid\Helper\Logger $logger
+        \Mobipaid\Mobipaid\Helper\Logger $logger,
+        \Magento\Framework\App\ProductMetadataInterface $productMetadata
     ) {
         parent::__construct($context);
         $this->curlFactory = $curlFactory;
         $this->logger = $logger;
+        $this->productMetadata = $productMetadata;
+    }
+
+    /**
+     * Get the current Magento version
+     *
+     * @return string
+     */
+    private function getMagentoVersion()
+    {
+        return $this->productMetadata->getVersion();
     }
 
     /**
@@ -67,26 +79,52 @@ class Curl extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getResponse($isJsonDecoded = false)
     {
-        $response = $this->http->read();
-        $responseCode = \Zend_Http_Response::extractCode($response);
-        $responseBody = \Zend_Http_Response::extractBody($response);
-        $this->http->close();
-        
-        if ($responseCode == 200 || $responseCode == 202 || $responseCode == 400) {
-            $this->logger->info(
-                'response from gateway : '.
-                json_encode($responseBody)
-            );
-            if ($isJsonDecoded) {
+        $magentoVersion = $this->getMagentoVersion();
+
+        if (version_compare($magentoVersion, '2.4.6', '<')) {
+            $response = $this->http->read();
+            $responseCode = \Zend_Http_Response::extractCode($response);
+            $responseBody = \Zend_Http_Response::extractBody($response);
+            $this->http->close();
+
+            if ($responseCode == 200 || $responseCode == 202 || $responseCode == 400) {
+                $this->logger->info(
+                    'response from gateway : '.
+                    json_encode($responseBody)
+                );
+                if ($isJsonDecoded) {
+                    return json_decode($responseBody, true);
+                }
+                return $responseBody;
+
+            } elseif ($responseCode == 422) {
                 return json_decode($responseBody, true);
             }
-            return $responseBody;
 
-        } elseif ($responseCode == 422) {
-            return json_decode($responseBody, true);
+            return false;
+        } else {
+
+            $response = $this->http->send();
+            $responseCode = $response->getStatusCode();
+            $responseBody = $response->getBody();
+
+            if ($responseCode == 200 || $responseCode == 202 || $responseCode == 400) {
+                $this->logger->info(
+                    'response from gateway : ' .
+                    json_encode($responseBody)
+                );
+                if ($isJsonDecoded) {
+                    return json_decode($responseBody, true);
+                }
+                return $responseBody;
+
+            } elseif ($responseCode == 422) {
+                return json_decode($responseBody, true);
+            }
+
+            return false;
         }
 
-        return false;
     }
 
     /**
@@ -101,22 +139,50 @@ class Curl extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function sendRequest($url, $request, $accessKey, $method = 'GET', $isJsonDecoded = true)
     {
-        $headers = [
-                "Authorization:Bearer ".$accessKey
-            ];
- 
-        $this->http = $this->curlFactory->create();
-        $this->http->setConfig(['verifypeer' => false]);
+            $magentoVersion = $this->getMagentoVersion();
 
-        if ($method == 'POST') {
-            array_push($headers, "content-type: application/json");
-            $this->http->write(\Zend_Http_Client::POST, $url, $http_ver = '1.1', $headers, json_encode($request));
-        } elseif ($method == 'PUT') {
-            array_push($headers, "content-type: application/json");
-            $this->http->write(\Zend_Http_Client::PUT, $url, $http_ver = '1.1', $headers, json_encode($request));
-        } else {
-            $this->http->write(\Zend_Http_Client::GET, $url, $http_ver = '1.1', $headers, json_encode($request));
-        }
-        return $this->getResponse($isJsonDecoded);
+            if(version_compare($magentoVersion, '2.4.6', '<')){
+                $headers = [
+                        "Authorization:Bearer ".$accessKey
+                    ];
+
+                $this->http = $this->curlFactory->create();
+                $this->http->setConfig(['verifypeer' => false]);
+
+                if ($method == 'POST') {
+                    array_push($headers, "content-type: application/json");
+                    $this->http->write(\Zend_Http_Client::POST, $url, $http_ver = '1.1', $headers, json_encode($request));
+                } elseif ($method == 'PUT') {
+                    array_push($headers, "content-type: application/json");
+                    $this->http->write(\Zend_Http_Client::PUT, $url, $http_ver = '1.1', $headers, json_encode($request));
+                } else {
+                    $this->http->write(\Zend_Http_Client::GET, $url, $http_ver = '1.1', $headers, json_encode($request));
+                }
+                return $this->getResponse($isJsonDecoded);
+            }else{
+                $headers = [
+                    "Authorization: Bearer " . $accessKey
+                ];
+
+                $this->http = new \Laminas\Http\Client();
+
+                if ($method == \Laminas\Http\Request::METHOD_POST || $method == \Laminas\Http\Request::METHOD_PUT) {
+                    array_push($headers, "content-type: application/json");
+                    $httpMethod = $method == \Laminas\Http\Request::METHOD_POST ? \Laminas\Http\Request::METHOD_POST : \Laminas\Http\Request::METHOD_PUT;
+
+                    $this->http->setUri($url);
+                    $this->http->setHeaders($headers);
+                    $this->http->setMethod($httpMethod);
+                    $this->http->setRawBody(json_encode($request));
+
+                } else {
+                    $this->http->setMethod(\Laminas\Http\Request::METHOD_GET);
+                    $this->http->setHeaders($headers);
+                    $this->http->setUri($url);
+                }
+
+
+                return $this->getResponse($isJsonDecoded);
+            }
     }
 }
