@@ -14,7 +14,7 @@
             <group id="mobipaid_settings" translate="label" type="text" sortOrder="800" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Mobipaid Settings</label>
                 <field id="version" type="label" sortOrder="1" showInDefault="1">
-                    <label>1.0.7</label>
+                    <label>1.0.8</label>
                     <frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
                     <config_path>general/mobipaid_settings/version</config_path>
                 </field>

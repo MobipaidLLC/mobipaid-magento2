@@ -141,6 +141,11 @@ class Curl extends \Magento\Framework\App\Helper\AbstractHelper
     {
             $magentoVersion = $this->getMagentoVersion();
 
+            $request["cart_items"] = array_values(array_filter($request["cart_items"], function ($item) {
+                return $item["unit_price"] != 0.0;
+            })); 
+            
+
             if(version_compare($magentoVersion, '2.4.6', '<')){
                 $headers = [
                         "Authorization:Bearer ".$accessKey
