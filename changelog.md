@@ -1,4 +1,4 @@
-## 1.0.8 - 02 Sep 2022 - shop version compatible Magento CE 2.3.1 - 2.4.6
+## 1.0.8 - 02 Sep 2023 - shop version compatible Magento CE 2.3.1 - 2.4.6
 * update zend_http to laminas. now plugin can support up to Magento CE 2.4.6
 
 ## 1.0.7 - 02 Sep 2022 - shop version compatible Magento CE 2.3.1 - 2.4.5
